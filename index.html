@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Question for Maltiti</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="hearts"></div>
+
+<div class="wrap">
+  <div class="card">
+    <div class="big-emoji">💍</div>
+    <h1>Would you marry me, Maltiti?</h1>
+    <p class="subtitle">Take your time... but choose wisely 👀</p>
+
+    <button class="btn btn-yes" id="yesBtn">YES</button>
+    <button class="btn btn-no" id="noBtn">NO</button>
+    <button class="btn btn-no" id="noAnswerBtn">NO ANSWER</button>
+
+    <div class="taunt" id="taunt"></div>
+    <footer class="credit">a very serious proposal from Fahd</footer>
+  </div>
+</div>
+
+<script src="hearts.js"></script>
+<script>
+  const noBtn = document.getElementById('noBtn');
+  const noAnswerBtn = document.getElementById('noAnswerBtn');
+  const yesBtn = document.getElementById('yesBtn');
+  const taunt = document.getElementById('taunt');
+
+  const taunts = [
+    "nice try 😏",
+    "not today!",
+    "catch me if you can",
+    "that button is scared of you",
+    "she said no to running away from this",
+    "keep trying, I have all day",
+    "almost... nope!",
+    "this button believes in second chances, just not for you clicking it"
+  ];
+
+  function randomTaunt() {
+    taunt.textContent = taunts[Math.floor(Math.random() * taunts.length)];
+  }
+
+  function dodge(btn) {
+    const margin = 20;
+    const btnRect = btn.getBoundingClientRect();
+    const maxX = window.innerWidth - btnRect.width - margin;
+    const maxY = window.innerHeight - btnRect.height - margin;
+
+    const newX = Math.max(margin, Math.random() * maxX);
+    const newY = Math.max(margin, Math.random() * maxY);
+
+    btn.style.position = 'fixed';
+    btn.style.left = newX + 'px';
+    btn.style.top = newY + 'px';
+    btn.style.margin = '0';
+    randomTaunt();
+  }
+
+  [noBtn, noAnswerBtn].forEach((btn) => {
+    // move away as soon as the cursor gets close, so a click basically never lands
+    btn.addEventListener('mouseenter', () => dodge(btn));
+    btn.addEventListener('mousemove', () => dodge(btn));
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      dodge(btn);
+    });
+    // mobile: dodge on touch too
+    btn.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      dodge(btn);
+    });
+  });
+
+  yesBtn.addEventListener('click', () => {
+    window.location.href = 'congrats.html';
+  });
+</script>
+
+</body>
+</html>

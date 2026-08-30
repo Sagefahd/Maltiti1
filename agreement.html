@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Marriage Agreement</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="hearts"></div>
+
+<div class="wrap">
+  <div class="card">
+    <div class="big-emoji">📜💍</div>
+    <h1>The Official Marriage Agreement</h1>
+    <p class="subtitle" id="dateLine">Let the record show what has been agreed upon.</p>
+
+    <div class="clause">Clause 1: The bride, Marzuka (also known as Maltiti, also known as Titi), hereby agrees to a lifetime of putting up with Fahd's jokes, without a right to appeal.</div>
+    <div class="clause">Clause 2: The groom, Fahd, agrees to always order her food first before deciding on his own.</div>
+    <div class="clause">Clause 3: Both parties agree the wedding date set on the previous page is final, binding, and not subject to "let's talk about it later."</div>
+    <div class="clause">Clause 4: This agreement becomes legally, emotionally, and dramatically binding only upon payment of the processing fee below.</div>
+
+    <div class="stamp">OFFICIAL &amp; BINDING</div>
+
+    <div style="margin-top:28px;">
+      <p class="subtitle" style="margin-bottom:4px;">Processing Fee</p>
+      <div class="price-tag">GHS 10.00</div>
+      <button class="btn btn-yes" id="payBtn">Pay &amp; Accept Agreement</button>
+    </div>
+
+    <footer class="credit">a very serious proposal from Fahd</footer>
+  </div>
+</div>
+
+<div id="modalOverlay" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="big-emoji">💸💍</div>
+    <h1 style="font-size:1.3rem;">Payment Accepted!</h1>
+    <p class="subtitle">GHS 10.00 has been symbolically transferred from Marzuka's heart to Fahd's.</p>
+    <p class="subtitle" id="modalDate"></p>
+    <button class="btn btn-yes" id="closeModalBtn">Close</button>
+  </div>
+</div>
+
+<script src="hearts.js"></script>
+<script>
+  const dateLine = document.getElementById('dateLine');
+  const savedDate = localStorage.getItem('weddingDate');
+  const savedTime = localStorage.getItem('weddingTime');
+
+  if (savedDate && savedTime) {
+    const pretty = new Date(savedDate + 'T' + savedTime).toLocaleString('en-GB', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+      hour: '2-digit', minute: '2-digit'
+    });
+    dateLine.innerHTML = `Wedding date on record: <strong>${pretty}</strong>`;
+  }
+
+  const payBtn = document.getElementById('payBtn');
+  const modalOverlay = document.getElementById('modalOverlay');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const modalDate = document.getElementById('modalDate');
+
+  payBtn.addEventListener('click', () => {
+    modalDate.textContent = savedDate && savedTime
+      ? `See you at the altar. Don't be late.`
+      : `Go back and set a date first though 😅`;
+    modalOverlay.classList.remove('hidden');
+  });
+
+  closeModalBtn.addEventListener('click', () => {
+    modalOverlay.classList.add('hidden');
+  });
+</script>
+
+</body>
+</html>

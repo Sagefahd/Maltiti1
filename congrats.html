@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>She Said Yes!</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="hearts"></div>
+
+<div class="wrap">
+  <div class="card">
+    <div class="big-emoji">🎉💍🎉</div>
+    <h1>Congratulations Marzuka!</h1>
+    <p class="subtitle">You have officially accepted to marry <span class="gold-text">Fahd</span>. There's no undo button for this one 😌</p>
+
+    <div id="dateSection">
+      <button class="btn btn-yes" id="setDateBtn">Set a Date</button>
+    </div>
+
+    <div id="datePicker" class="hidden">
+      <div class="form-row">
+        <label for="weddingDate">Wedding Date</label>
+        <input type="date" id="weddingDate">
+      </div>
+      <div class="form-row">
+        <label for="weddingTime">Wedding Time</label>
+        <input type="time" id="weddingTime">
+      </div>
+      <button class="btn btn-yes" id="confirmDateBtn">Confirm Date</button>
+    </div>
+
+    <div id="confirmedSection" class="hidden">
+      <p class="subtitle" id="confirmedText"></p>
+      <button class="btn btn-yes" id="continueBtn">Continue →</button>
+    </div>
+
+    <footer class="credit">a very serious proposal from Fahd</footer>
+  </div>
+</div>
+
+<script src="hearts.js"></script>
+<script>
+  const setDateBtn = document.getElementById('setDateBtn');
+  const datePicker = document.getElementById('datePicker');
+  const confirmDateBtn = document.getElementById('confirmDateBtn');
+  const confirmedSection = document.getElementById('confirmedSection');
+  const confirmedText = document.getElementById('confirmedText');
+  const continueBtn = document.getElementById('continueBtn');
+  const dateSection = document.getElementById('dateSection');
+
+  setDateBtn.addEventListener('click', () => {
+    dateSection.classList.add('hidden');
+    datePicker.classList.remove('hidden');
+  });
+
+  confirmDateBtn.addEventListener('click', () => {
+    const dateVal = document.getElementById('weddingDate').value;
+    const timeVal = document.getElementById('weddingTime').value;
+
+    if (!dateVal || !timeVal) {
+      alert('Please pick both a date and time, Titi 💕');
+      return;
+    }
+
+    localStorage.setItem('weddingDate', dateVal);
+    localStorage.setItem('weddingTime', timeVal);
+
+    const prettyDate = new Date(dateVal + 'T' + timeVal).toLocaleString('en-GB', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+      hour: '2-digit', minute: '2-digit'
+    });
+
+    confirmedText.innerHTML = `It's official. Mark it in your calendar: <br><strong>${prettyDate}</strong> 💍`;
+    datePicker.classList.add('hidden');
+    confirmedSection.classList.remove('hidden');
+  });
+
+  continueBtn.addEventListener('click', () => {
+    window.location.href = 'agreement.html';
+  });
+</script>
+
+</body>
+</html>
